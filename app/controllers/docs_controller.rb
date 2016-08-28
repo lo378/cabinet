@@ -1,5 +1,6 @@
 class DocsController < ApplicationController
   before_action :find_doc, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, except: [:index, :show]
 
   def index
     @docs = Doc.where(user_id: current_user)
@@ -10,7 +11,7 @@ class DocsController < ApplicationController
   end
 
   def new
-    @doc = current_user.docs.build
+    @doc = Doc.new
   end
 
   def create
